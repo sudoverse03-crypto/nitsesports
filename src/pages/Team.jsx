@@ -3,6 +3,8 @@ import { Users, Mail, UserPlus } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.jsx";
 import { Button } from "@/components/ui/button.jsx";
+import { Helmet } from "react-helmet-async";
+
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.jsx";
 
@@ -45,7 +47,7 @@ const Team = () => {
     { name: "Vaibhav Raj", role: "Vice President", initials: "VR", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372664/vaibhav_a9c9oi.jpg", category: "president", socials: { instagram: "https://www.instagram.com/__raj_vaibhav__/?hl=en", facebook: "https://www.facebook.com/share/19tdpR9wb9/", linkedin: "https://www.linkedin.com/in/vaibhav-raj-o7/" }  },
     { name: "Vivek Kumar", role: "General Secretary", initials: "VK", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372696/vivek_jish2r.png", category: "secretary" , socials: { instagram: "https://www.instagram.com/vix.vivek?igsh=MWk4cnlkbHlkdnlncw==", facebook: "https://www.facebook.com/share/17VCbgYNya/", linkedin: "https://www.linkedin.com/in/vivek-kumar-0b8205282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" } },
     { name: "Arkaprovo Mukherjee", role: "Assistant General Secretary", initials: "AM", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372612/arko_kwlblw.jpg", category: "secretary", socials: { instagram: "https://www.instagram.com/mukherjee.arkaprovo?igsh=d3g4aXo2dmFsYjJj", facebook: "https://www.facebook.com/share/17GZYmGt42/", linkedin: "https://www.linkedin.com/in/arkaprovo-mukherjee-b3a574268?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" }  },
-    { name: "Devashish Gupta", role: "Event Management Head", initials: "DG", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372622/devashish_gcm794.jpg", category: "heads", socials: { instagram: "https://www.instagram.com/dev._.ashish_?igsh=OWZ1bW8xdWNkcWNr", facebook: "https://www.facebook.com/share/1JqSeh5ssL/", linkedin: "https://www.linkedin.com/in/devashish-verse/" }  },
+    { name: "Devashish Gupta", role: "Event Management Head", initials: "DG", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372622/devashish_gcm794.jpg", category: "heads", socials: { instagram: "https://www.instagram.com/dev._.ashish_?igsh=OWZ1bW8xdWNkcWNr", facebook: "https://www.facebook.com/sudoverse/", linkedin: "https://www.linkedin.com/in/devashish-verse/" }  },
     { name: "Mohit Kumar Lalwani", role: "Technical Head", initials: "ML", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372641/mohit_ymgs3w.jpg", category: "heads", socials: { instagram: "https://www.instagram.com/mohitkumarlalwani?igsh=MWttZWtuOXhvajA0bQ==", facebook: "https://www.facebook.com/share/16YiM7qwyK/", linkedin: "https://www.linkedin.com/in/mohit-kumar-lalwani-603239297/" }  },
     { name: "Abhishek Kumar", role: "Social Media Head", initials: "AG", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372621/abhishek_fgedzj.png", category: "heads", socials: { instagram: "https://www.instagram.com/abikumar1234?igsh=MWJndGthOXNkYzE4cA==", facebook: "https://www.facebook.com/share/1FVjtPGHMe/", linkedin: "https://www.linkedin.com/in/abhishek-kumar-b5a08a1b3/" }  },
     { name: "Gaurav Ghosh", role: "Marketing Head", initials: "GG", images: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372624/gaurav_tmhxvv.jpg", category: "heads", socials: { instagram: "https://www.instagram.com/gaurav_24044?utm_source=qr&igsh=a3lucmJ0djd3ZDhr", facebook: "https://www.facebook.com/share/1AuP79rWkt/", linkedin: "https://www.linkedin.com/in/gaurav-ghosh-50a2362a8/" }  },
@@ -97,8 +99,38 @@ const Team = () => {
 
   // Unified panel background (hex) to ensure both panels look identical
   const panelBg = "linear-gradient(90deg,#1e1a2d 0%,#05050a 100%)";
-
+// 🧩 SEO Meta Tags and Structured Data
   return (
+      <>
+ <SEO
+        title="NIT Silchar Esports Team | Devashish Gupta & Members"
+        description="Meet the NITS Esports leadership team — including Devashish Gupta, Shivam Kumar, and Vaibhav Raj — leading gaming and event initiatives."
+        image="https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372622/devashish_gcm794.jpg"
+        canonical="https://www.nitsesports.in/team"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "NIT Silchar Esports Club",
+          url: "https://www.nitsesports.in",
+          logo: "https://www.nitsesports.in/favicon.png",
+          member: [
+            {
+              "@type": "Person",
+              name: "Devashish Gupta",
+              jobTitle: "Event Management Head",
+              image:
+                "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372622/devashish_gcm794.jpg",
+              sameAs: [
+                "https://www.linkedin.com/in/devashish-verse/",
+                "https://github.com/sudo-verse",
+                "https://www.instagram.com/dev._.ashish_",
+              ],
+            },
+          ],
+        }}
+      />
+
+
     <div className="min-h-screen pt-24 pb-12 bg-transparent">
       <div className="container mx-auto px-4">
         {/* Header */}
@@ -283,6 +315,7 @@ const Team = () => {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 };
 

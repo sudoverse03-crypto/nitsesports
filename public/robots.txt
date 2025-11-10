@@ -1,3 +1,10 @@
+# ================================
+# NIT Silchar Esports Club - robots.txt
+# Author: Devashish Gupta
+# Last updated: 2025-11-11
+# ================================
+
+# --- Allow search engines ---
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +17,18 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# --- Allow all other bots ---
 User-agent: *
 Allow: /
+
+# --- Disallow sensitive routes (if any in the future) ---
+# Disallow: /api/
+# Disallow: /admin/
+# Disallow: /backend/
+# Disallow: /private/
+
+# --- Sitemap for crawl optimization ---
+Sitemap: https://www.nitsesports.in/sitemap.xml
+
+# --- Crawl delay (optional but recommended for small servers) ---
+Crawl-delay: 5

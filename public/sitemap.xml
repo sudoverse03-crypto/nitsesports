@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
+  <!-- 🌍 NIT Silchar Esports Sitemap -->
+  <!-- Generated manually for accurate SEO coverage -->
 
-<url>
-  <loc>https://www.nitsesports.in/</loc>
-  <lastmod>2025-11-07T10:12:32+00:00</lastmod>
-</url>
+  <url>
+    <loc>https://www.nitsesports.in/</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
 
+  <url>
+    <loc>https://www.nitsesports.in/team</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nitsesports.in/events</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nitsesports.in/tournaments</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nitsesports.in/about</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nitsesports.in/contact</loc>
+    <lastmod>2025-11-07T10:12:32+00:00</lastmod>
+    <priority>0.60</priority>
+  </url>
 
 </urlset>
