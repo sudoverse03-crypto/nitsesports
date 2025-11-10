@@ -4,6 +4,7 @@ import { FaInstagram, FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO.jsx";
 
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.jsx";
