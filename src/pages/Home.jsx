@@ -106,14 +106,6 @@ const Home = () => {
   viewport={{ once: true, amount: 0.2 }}
   variants={staggerContainer}
 >
-  {/* Title */}
-  <motion.h1
-    variants={fadeInVariants}
-    className="font-orbitron text-5xl sm:text-6xl md:text-7xl font-bold text-[#66A3FF] mb-6 tracking-wide"
-  >
-    NIT SILCHAR<br />ESPORTS CLUB
-  </motion.h1>
-
   {/* Subtitle */}
   <motion.p
     variants={fadeInVariants}

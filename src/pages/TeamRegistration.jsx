@@ -165,6 +165,56 @@ const TeamRegistration = () => {
         return_url: `${window.location.origin}/cashfree-return?order_id={order_id}`,
       };
 
+      // If price is 0, skip Cashfree and register directly to Supabase
+      if (price === 0) {
+        try {
+          const { data, error } = await supabase
+            .from("team_registrations")
+            .insert([
+              {
+                event_id: eventId,
+                game_id: gameId,
+                email: formData.email,
+                team_name: formData.teamName,
+                team_leader_name: formData.teamLeaderName,
+                team_leader_contact: formData.teamLeaderContact,
+                alternate_contact: formData.alternateContact,
+                college_type: collegeType,
+                team_leader_discord: formData.teamLeaderDiscord,
+                players: formData.players,
+                player_in_game_names: formData.playerInGameNames,
+                scholar_ids: formData.scholarIds,
+                amount: price,
+                payment_status: "free",
+                created_at: new Date().toISOString(),
+              },
+            ])
+            .select();
+
+          if (error) {
+            console.error("Registration failed", error);
+            toast.error(error.message || "Registration failed");
+            setLoading(false);
+            return;
+          }
+
+          if (!data || data.length === 0) {
+            toast.error("Registration failed: No data returned");
+            setLoading(false);
+            return;
+          }
+
+          toast.success("✅ Registration successful!");
+          navigate(`/registration-confirmation/${data[0].id}`, { replace: true });
+          return;
+        } catch (err) {
+          console.error("Registration error", err);
+          toast.error("Registration failed. Please try again.");
+          setLoading(false);
+          return;
+        }
+      }
+
       /* 🔥 CHANGED: Using safeFetch instead of fetch(API_BASE …) */
       const resp = await safeFetch("/api/create-cashfree-order", {
         method: "POST",
@@ -172,10 +222,16 @@ const TeamRegistration = () => {
         body: JSON.stringify(payload),
       });
 
-
-
-
-    const response = await resp.json();
+      const responseText = await resp.text();
+      let response;
+      try {
+        response = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Invalid JSON response:", responseText);
+        toast.error("Server error: Invalid response from server");
+        setLoading(false);
+        return;
+      }
 
 if (!response.success || !response.payment_session_id) {
   console.error("Create order failed", response);
@@ -352,7 +408,9 @@ console.log("✅ Payment Session ID:", paymentSessionId);
             <div className="space-y-4 pt-4 border-t border-border/30">
               <div className="flex justify-between items-center">
                 <span className="font-semibold text-lg">Total Amount:</span>
-                <span className="font-orbitron text-2xl font-bold text-primary">₹{price}</span>
+                <span className="font-orbitron text-2xl font-bold text-primary">
+                  {price === 0 ? "FREE" : `₹${price}`}
+                </span>
               </div>
 
               <div className="flex gap-2">
@@ -369,7 +427,7 @@ console.log("✅ Payment Session ID:", paymentSessionId);
                   onClick={handleSubmit}
                   disabled={loading}
                 >
-                  {loading ? "Processing..." : `Pay ₹${price}`}
+                  {loading ? "Processing..." : price === 0 ? "Register" : `Pay ₹${price}`}
                 </Button>
               </div>
             </div>

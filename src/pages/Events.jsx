@@ -33,9 +33,9 @@ const Events = () => {
   };
 
   const games = [
-    { id: "bgmi", name: "BGMI", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372612/bgmi_lxvrnt.jpg", brochure: "https://gamma.app/docs/VANGUARD-ARENA-i71v4n1968gk240", prize: 30000 },
-    // { id: "codm", name: "COD Mobile", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372611/cod_kwjbkq.avif", brochure: "https://example.com/brochures/codm" },
-    { id: "freefire", name: "Free Fire", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372616/freefire_uutecs.jpg", brochure: "https://gamma.app/docs/VANGUARD-ARENA-aei2y0ivstdkaww?mode=doc", prize: 20000 },
+    { id: "bgmi", name: "BGMI", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372612/bgmi_lxvrnt.jpg", brochure: "https://gamma.app/docs/VANGUARD-ARENA-i71v4n1968gk240", prize: 25000 },
+    { id: "rc", name: "Real Cricket", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1766304221/KRAFTON.jpg_ms0hab.webp", brochure: "https://example.com/brochures/codm", prize: 5000 },
+    { id: "freefire", name: "Free Fire", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372616/freefire_uutecs.jpg", brochure: "https://gamma.app/docs/VANGUARD-ARENA-aei2y0ivstdkaww?mode=doc", prize: 10000 },
     { id: "valorant", name: "Valorant", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372668/valorant_qxje8q.jpg", brochure: "https://gamma.app/docs/Vanguard-Arena--zrpooho817957yj?mode=doc", prize: 10000 },
     { id: "ml", name: "Mobile Legends", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372633/ml_h8honj.jpg", brochure: "https://gamma.app/docs/TECNOESIS-CUP-mlbb-h5oottx9xnwqnet?mode=doc", prize: 10000 },
     // { id: "fifa", name: "FIFA 25", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372618/FIFA_tzgbj9.jpg", brochure: "https://example.com/brochures/fifa" },
@@ -60,9 +60,9 @@ const Events = () => {
   ]
 
   const stats = [
-    { value: "2000+", label: "Players" },
-    { value: "₹70,000", label: "Prize pool" },
-    { value: "4", label: "Competitions" },
+    { value: "1000+", label: "Players" },
+    { value: "₹60,000", label: "Prize pool" },
+    { value: "5", label: "Competitions" },
   ];
 
   return (
@@ -94,7 +94,7 @@ const Events = () => {
             {/* Date Tag */}
             <div className="rounded-[9px] bg-gradient-to-r from-[#4E442D] to-yellow-700/50 px-2.5 py-1.5">
               <p className="text-sm leading-tight tracking-tight text-white uppercase md:text-base">
-                Nov 20 - Nov 23 2025
+                Jan 14 - Jan 17 2026
               </p>
             </div>
 

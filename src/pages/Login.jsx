@@ -21,7 +21,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const redirect = (location && location.state && location.state.from) ?? "/";
+  const redirect = (location && location.state && location.state.from) ?? "/events";
   const allowedEmail = import.meta.env.VITE_ADMIN_EMAIL;
 
   // ✅ Email validation for NITS & external users
@@ -78,10 +78,15 @@ const Login = () => {
           }
         },
         nonce: hashedNonce,
-        use_fedcm_for_prompt: true,
+        use_fedcm_for_prompt: false,
       });
 
-      window.google.accounts.id.prompt();
+      try {
+        window.google.accounts.id.prompt();
+      } catch (err) {
+        // FedCM not available in this environment
+        console.debug("Google One Tap not available");
+      }
     };
 
     const timeout = setTimeout(loadGoogleOneTap, 700);
@@ -92,17 +97,18 @@ const Login = () => {
   const onGoogleLogin = async () => {
     setLoadingGoogle(true);
     try {
-      const { dataerror } = await supabase.auth.signInWithOAuth({
+      const redirectUrl = `${window.location.origin}/auth/callback`;
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: "https://www.nitsesports.in/auth/callback",
+          redirectTo: redirectUrl,
           queryParams: {
             access_type: "offline",
             prompt: "consent",
           },
         },
       });
-      if (data.error) throw data.error;
+      if (error) throw error;
     } catch (err) {
       toast.error("Google login failed");
       console.error(err);
