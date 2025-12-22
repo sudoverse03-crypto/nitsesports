@@ -21,7 +21,11 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const redirect = (location && location.state && location.state.from) ?? "/events";
+  const redirect =
+  sessionStorage.getItem("post_login_redirect") ||
+  (location.state && location.state.from) ||
+  "/events";
+
   const allowedEmail = import.meta.env.VITE_ADMIN_EMAIL;
 
   // ✅ Email validation for NITS & external users
@@ -70,8 +74,12 @@ const Login = () => {
               nonce,
             });
             if (error) throw error;
-            toast.success("Signed in with Google");
-            navigate(redirect, { replace: true });
+            toast.success("Welcome!");
+            const finalRedirect = redirect;
+            sessionStorage.removeItem("post_login_redirect");
+            navigate(finalRedirect, { replace: true });
+
+
           } catch (err) {
             toast.error("Google sign-in failed");
             console.error(err);
@@ -141,8 +149,12 @@ const Login = () => {
       return;
     }
 
-    toast.success("Welcome");
-    navigate(redirect, { replace: true });
+    toast.success("Welcome!");
+
+const finalRedirect = redirect;
+sessionStorage.removeItem("post_login_redirect");
+navigate(finalRedirect, { replace: true });
+
   };
 
   // ✅ Register new user
@@ -172,7 +184,11 @@ const Login = () => {
     }
 
     toast.success("Welcome!");
-    navigate(redirect, { replace: true });
+
+const finalRedirect = redirect;
+sessionStorage.removeItem("post_login_redirect");
+navigate(finalRedirect, { replace: true });
+
   };
 
   return (
