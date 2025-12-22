@@ -19,18 +19,26 @@ const Events = () => {
     setTimeout(() => setToastMessage(""), 3000);
   };
 
-  const handleRegisterClick = async (g) => {
-    try {
-      const { data } = await supabase.auth.getSession();
-      if (!data?.session) {
-        navigate('/login', { state: { from: `/events/vanguardarena/register/${g.id}` } });
-        return;
-      }
-      navigate(`/events/vanguardarena/register/${g.id}`);
-    } catch (err) {
-      showToast("Auth check failed");
+ const handleRegisterClick = async (g) => {
+  try {
+    const { data } = await supabase.auth.getSession();
+    const target = `/events/vanguardarena/register/${g.id}`;
+
+    if (!data?.session) {
+      // ✅ store intended page
+      sessionStorage.setItem("post_login_redirect", target);
+
+      // ✅ go to login (NO state)
+      navigate("/login");
+      return;
     }
-  };
+
+    // user already logged in
+    navigate(target);
+  } catch (err) {
+    showToast("Auth check failed");
+  }
+};
 
   const games = [
     { id: "bgmi", name: "BGMI", image: "https://res.cloudinary.com/dboqkwvhv/image/upload/v1761372612/bgmi_lxvrnt.jpg", brochure: "https://gamma.app/docs/VANGUARD-ARENA-i71v4n1968gk240", prize: 25000 },

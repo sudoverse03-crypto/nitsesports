@@ -9,14 +9,24 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleAuth = async () => {
       const { data, error } = await supabase.auth.getSession();
+
       if (error || !data?.session) {
         toast.error("Login failed. Please try again.");
         navigate("/login", { replace: true });
         return;
       }
+
+      // ✅ read redirect from sessionStorage
+      const redirect =
+        sessionStorage.getItem("post_login_redirect") || "/events";
+
+      // ✅ clear it after use
+      sessionStorage.removeItem("post_login_redirect");
+
       toast.success("Signed in successfully");
-      navigate("/", { replace: true }); // or your intended route
+      navigate(redirect, { replace: true });
     };
+
     handleAuth();
   }, [navigate]);
 
