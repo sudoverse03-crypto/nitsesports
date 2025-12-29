@@ -15,13 +15,13 @@ export const gameConfig = {
     id: "valorant",
     name: "Valorant",
     playerCount: 5,
-    price: { nits: 100, other: 200 },
+    price: { nits: 100, other: 1 },
   },
   freefire: {
     id: "freefire",
     name: "Free Fire",
     playerCount: 4,
-    price: { nits: 100, other: 200 },
+    price: { nits: 100, other: 1 },
   },
   codm: {
     id: "codm",
@@ -33,7 +33,7 @@ export const gameConfig = {
     id: "ml",
     name: "Mobile Legends",
     playerCount: 5,
-    price: { nits: 100, other: 200 },
+    price: { nits: 100, other: 1 },
   },
   fifa: {
     id: "fifa",
