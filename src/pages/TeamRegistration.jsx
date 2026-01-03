@@ -34,6 +34,8 @@ const TeamRegistration = () => {
 
   const [loading, setLoading] = useState(false);
   const [collegeType, setCollegeType] = useState("nits");
+  const substituteCount = gameInfo.substituteCount || 0;
+const totalRequiredPlayers = playerCount + substituteCount;
   const [formData, setFormData] = useState({
     email: "",
     teamName: "",
@@ -41,9 +43,9 @@ const TeamRegistration = () => {
     teamLeaderContact: "",
     teamLeaderDiscord: "",
     alternateContact: "",
-    players: [],
-    playerInGameNames: [],
-    scholarIds: [],
+    players: new Array(totalRequiredPlayers).fill(""),
+  playerInGameNames: new Array(totalRequiredPlayers).fill(""),
+  scholarIds: new Array(totalRequiredPlayers).fill(""),
   });
 
   // Check if email is NITS student
@@ -133,6 +135,16 @@ const TeamRegistration = () => {
       if (!formData.playerInGameNames[i]) return `Player ${i + 1} in-game name is required`;
       if (emailIsNits && !formData.scholarIds[i]) {
         return `Player ${i + 1} scholar ID is required for NITS students`;
+      }
+    }
+
+    for (let i = playerCount; i < totalRequiredPlayers; i++) {
+      const hasName = formData.players[i];
+      const hasIGN = formData.playerInGameNames[i];
+      
+      if (hasName || hasIGN) {
+        if (!hasName || !hasIGN) return `Please complete all fields for Substitute ${i - playerCount + 1}`;
+        if (emailIsNits && !formData.scholarIds[i]) return `Scholar ID required for Substitute ${i - playerCount + 1}`;
       }
     }
 
@@ -307,9 +319,9 @@ console.log("✅ Payment Session ID:", paymentSessionId);
               </div>
 
               <div>
-                <Label>Team Leader In-Game Name ({gameInfo.name} #Tagline) *</Label>
+                <Label>Team Leader In-Game Name ({gameInfo.name} #IN_GAME_ID) *</Label>
                 {/* Fixed typo: e.g.value -> e.target.value */}
-                <Input required value={formData.playerInGameNames[0] || ""} onChange={(e) => handlePlayerChange(0, "inGameName", e.target.value)} placeholder="In-game name with tagline" />
+                <Input required value={formData.playerInGameNames[0] || ""} onChange={(e) => handlePlayerChange(0, "inGameName", e.target.value)} placeholder="In-Game Name and Id (Separated with #)" />
               </div>
 
               <div>
@@ -377,12 +389,12 @@ console.log("✅ Payment Session ID:", paymentSessionId);
                       </div>
 
                       <div>
-                        <Label className="text-xs">In-Game Name ({gameInfo.name} #Tagline) *</Label>
+                        <Label className="text-xs">In-Game Name ({gameInfo.name} #IN_GAME_ID) *</Label>
                         <Input
                           required
                           value={formData.playerInGameNames[playerIndex] || ""}
-                          onChange={(e) => handlePlayerChange(playerIndex, "inGameName", e.target.value)}
-                          placeholder="In-game name with tagline"
+                          onChange={(e) => handlePlayerChange(playerIndex, "In-Game Name and Id (Separated with #)", e.target.value)}
+                          placeholder="In-Game Name and Id (Separated with #)"
                         />
                       </div>
 
@@ -403,6 +415,49 @@ console.log("✅ Payment Session ID:", paymentSessionId);
                 })}
               </div>
             )}
+
+{substituteCount > 0 && (
+  <div className="space-y-4 mt-8 pt-6 border-t border-dashed border-primary/30">
+    <h3 className="font-orbitron text-lg font-semibold text-primary/80">Substitutes (Optional)</h3>
+    {Array.from({ length: substituteCount }).map((_, i) => {
+      const playerIndex = playerCount + i; // Index starts after main players
+      return (
+        <div key={playerIndex} className="border border-primary/10 bg-primary/5 rounded-lg p-4 space-y-3">
+          <h4 className="font-semibold text-sm text-secondary">Substitute {i + 1}</h4>
+          
+          <div>
+            <Label className="text-xs">Name</Label>
+            <Input
+              value={formData.players[playerIndex] || ""}
+              onChange={(e) => handlePlayerChange(playerIndex, "name", e.target.value)}
+              placeholder="Full Name"
+            />
+          </div>
+
+          <div>
+            <Label className="text-xs">In-Game Name</Label>
+            <Input
+              value={formData.playerInGameNames[playerIndex] || ""}
+              onChange={(e) => handlePlayerChange(playerIndex, "inGameName", e.target.value)}
+              placeholder="IGN #ID"
+            />
+          </div>
+
+          {collegeType === "nits" && (
+            <div>
+              <Label className="text-xs">Scholar ID</Label>
+              <Input
+                value={formData.scholarIds[playerIndex] || ""}
+                onChange={(e) => handlePlayerChange(playerIndex, "scholarId", e.target.value)}
+                placeholder="Scholar ID"
+              />
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+)}
 
             {/* Price and Submit */}
             <div className="space-y-4 pt-4 border-t border-border/30">
