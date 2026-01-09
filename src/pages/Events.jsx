@@ -231,14 +231,26 @@ useEffect(() => {
                       </Button>
                     </a>
 <Button
-  disabled={g.id === "valorant"}
   className={`w-full font-orbitron ${
-    g.id === "valorant" ? "opacity-60 cursor-not-allowed" : ""
+    g.id === "valorant" ? "opacity-60" : ""
   }`}
-  onClick={() => showToast("Valorant registrations are closed")}
+  onClick={() => {
+    if (g.id === "valorant") {
+      showToast("Valorant registrations are closed");
+      return;
+    }
+
+    if (new Date() < REGISTRATION_START) {
+      showToast("Registrations open on 01 January 2026");
+      return;
+    }
+
+    handleRegisterClick(g);
+  }}
 >
   Register Team
 </Button>
+
 
 
 
