@@ -39,7 +39,7 @@ export const gameConfig = {
     name: "Mobile Legends",
     playerCount: 5,
     substituteCount: 1,
-    price: { nits: 100, other: 1 },
+    price: { nits: 100, other: 200 },
   },
   fifa: {
     id: "fifa",
