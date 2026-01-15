@@ -1,323 +1,320 @@
 // src/pages/EventSchedule.jsx
 
-import { Calendar, Clock, MapPin } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Link, useParams } from "react-router-dom";
-import { getEventById } from "@/data/eventsStore";
-// Removed: type Event import
-import { Button } from "@/components/ui/button";
-import { parse, addDays, differenceInCalendarDays, format } from "date-fns";
-
-// Removed: ScheduleSlot type definition
+import { useState } from 'react';
+import { Calendar, Clock, MapPin } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Link, useParams } from 'react-router-dom';
+import { getEventById } from '@/data/eventsStore';
+import { Button } from '@/components/ui/button';
+import { parse, addDays, differenceInCalendarDays, format } from 'date-fns';
 
 const EventSchedule = () => {
-  const { eventId } = useParams(); // Removed: <{ eventId: string }>
-  const storeEvent = eventId ? getEventById(eventId) : undefined; // Removed: : Event | undefined
+  const { eventId } = useParams();
+  const storeEvent = eventId ? getEventById(eventId) : undefined;
 
-  // Fallback event for Lock & Load
-  const event = // Removed: : Event | undefined
+  /* ---------- FALLBACK EVENTS ---------- */
+  const event =
     storeEvent ??
-    (eventId === "lock-load"
+    (eventId === 'lock-load'
       ? {
-          id: "lock-load",
-          title: "Lock & Load",
-          date: "Oct 12, 2025",
-          startDate: "Oct 12, 2025",
-          endDate: "Oct 18, 2025",
-          location: "Online",
-          participants: 117,
-          prize: "₹10,000",
-          status: "live",
-          image:
-            "https://cdn.builder.io/api/v1/image/assets%2F778be80571eb4edd92c70f9fecab8fab%2F8efd1aa0a2864beeb58f62fed4425fdd?format=webp&width=1200",
+          id: 'lock-load',
+          title: 'Lock & Load',
+          startDate: 'Oct 12, 2025',
+          endDate: 'Oct 18, 2025',
+          location: 'Online',
+          status: 'completed',
+          games: [],
+        }
+      : eventId === 'vanguard-arena'
+      ? {
+          id: 'vanguard-arena',
+          title: 'Vanguard Arena',
+          startDate: 'Jan 15, 2026',
+          endDate: 'Jan 18, 2026',
+          location: 'Online',
+          status: 'live',
           games: [
             {
-              id: "bgmi",
-              name: "BGMI",
-              image: "",
-              format: "points",
-              rankings: [],
+              id: 'bgmi',
+              name: 'BGMI',
               schedule: [
-                { date: "Oct 12, 2025", time: "9:00 PM - 9:45 PM", matchups: ["Group A vs Group B", "Group C vs Group D"] },
-                { date: "Oct 12, 2025", time: "10:00 PM - 10:45 PM", matchups: ["Group A vs Group C", "Group B vs Group D"] },
-                { date: "Oct 12, 2025", time: "11:00 PM - 11:45 PM", matchups: ["Group A vs Group D", "Group B vs Group C"] },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '6:00 PM',
+                  matchups: [
+                    'M1 — Group A — Erangel',
+                    'M1 — Group B — Erangel',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '6:40 PM',
+                  matchups: [
+                    'M2 — Group A — Erangel',
+                    'M2 — Group B — Erangel',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '7:20 PM',
+                  matchups: [
+                    'M3 — Group A — Miramar',
+                    'M3 — Group B — Miramar',
+                  ],
+                },
               ],
             },
             {
-              id: "freefire",
-              name: "FreeFire",
-              image: "",
-              format: "points",
-              rankings: [],
+              id: 'fifa',
+              name: 'FIFA',
               schedule: [
-                { date: "Oct 13, 2025", time: "6:00 PM - 6:40 PM", matchups: ["Group A , Group B"] },
-                { date: "Oct 13, 2025", time: "6:40 PM - 7:20 PM", matchups: ["Group C , Group D"] },
-                { date: "Oct 13, 2025", time: "7:20 PM - 8:00 PM", matchups: ["Group A , Group B"] },
-                { date: "Oct 13, 2025", time: "8:00 PM - 8:40 PM", matchups: ["Group C , Group D"] },
+                
+              ],
+            },
+            
+            {
+              id: 'ml',
+              name: 'Mobile Legends',
+              schedule: [
+                {
+                  date: 'Jan 15, 2026',
+                  time: '9:00 PM - 9:40 PM',
+                  matchups: [
+                    ' A1 vs A2 ',
+                    ' A3 vs A4 ',
+                    ' B1 vs B2 ',
+                    ' B3 vs B4 ',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '9:40 PM - 10:20 PM',
+                  matchups: [
+                    ' A1 vs A3 ',
+                    ' A2 vs A4 ',
+                    ' B1 vs B3 ',
+                    ' B2 vs B4 ',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '10:20 PM - 11:00 PM',
+                  matchups: [
+                    ' A1 vs A4 ',
+                    ' A2 vs A3 ',
+                    ' B1 vs B4 ',
+                    ' B2 vs B3 ',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '11:00 PM - 11:40 PM',
+                  matchups: [
+                    ' C1 vs C2 ',
+                    ' C3 vs C4 ',
+                    ' D1 vs D2 ',
+                    ' D3 vs D4 ',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '11:40 PM - 12:20 AM',
+                  matchups: [
+                    ' C1 vs C3 ',
+                    ' C2 vs C4 ',
+                    ' D1 vs D3 ',
+                    ' D2 vs D4 ',
+                  ],
+                },
+                {
+                  date: 'Jan 15, 2026',
+                  time: '12:20 AM - 12:40 AM',
+                  matchups: [
+                    ' C1 vs C4 ',
+                    ' C2 vs C3 ',
+                    ' D1 vs D4 ',
+                    ' D2 vs D3 ',
+                  ],
+                },
               ],
             },
             {
-              id: "MobileLegends",
-              name: "Mobile Legends",
-              image: "",
-              format: "points",
-              rankings: [],
+              id: 'rc',
+              name: 'Real Cricket',
               schedule: [
-                { date: "Oct 13, 2025", time: "9:30 PM - 10:15 PM", matchups: ["Group A1 vs A2 , Group A3 vs A4 , Group B1 vs B2 , Group B3 vs B4"] },
-                { date: "Oct 13, 2025", time: "10:15 PM - 11:00 PM", matchups: ["Group A1 vs A3 , Group A2 vs A4 , Group B1 vs B3 , Group B2 vs B4"] },
-                { date: "Oct 13, 2025", time: "11:00 PM - 11:45 PM", matchups: ["Group A1 vs A4 , Group A2 vs A3 , Group B1 vs B4 , Group B2 vs B3"] },
+                
               ],
             },
             {
-              id: "valorant",
-              name: "Valorant",
-              image: "",
-              format: "points",
-              rankings: [],
+              id: 'valorant',
+              name: 'Valorant',
               schedule: [
-                { date: "Oct 14, 2025", time: "6:00 PM - 7:00 PM", matchups: ["Group A1 vs A3 , Group B1 vs B3 , Group C1 vs C3"] },
-                { date: "Oct 14, 2025", time: "7:00 PM - 8:00 PM", matchups: ["Group A2 vs A3 , Group B2 vs B3 , Group C2 vs C3"] },
-                { date: "Oct 14, 2025", time: "8:00 PM - 9:00 PM", matchups: ["Group A1 vs A2 , Group B1 vs B2 , Group C1 vs C2"] },
+                
               ],
             },
-            {
-              id: "MobileLegends",
-              name: "Mobile Legends",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 14, 2025", time: "9:30 PM - 10:15 PM", matchups: ["Group C1 vs C2 , Group C3 vs C4 , Group D1 vs D2 , Group D3 vs D4"] },
-                { date: "Oct 14, 2025", time: "10:15 PM - 11:00 PM", matchups: ["Group C1 vs C3 , Group C2 vs C4 , Group D1 vs D3 , Group D2 vs D4"] },
-                { date: "Oct 14, 2025", time: "11:00 PM - 11:45 PM", matchups: ["Group C1 vs C4 , Group C2 vs C3 , Group D1 vs D4 , Group D2 vs D3"] },
-              ],
-            },
-            {
-              id: "valorant",
-              name: "Valorant",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 15, 2025", time: "06:00 PM - 07:00 PM", matchups: ["Whiff Master vs N-Zigger"] },
-                { date: "Oct 15, 2025", time: "07:00 PM - 08:00 PM", matchups: ["Aloo Pitika vs N-Zigger"] },
-                { date: "Oct 15, 2025", time: "08:00 PM - 09:00 PM", matchups: ["Whiff Master vs Aloo Pitika"] },
-              ],
-            },
-            {
-              id: "CODM",
-              name: "COD Mobile",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 15, 2025", time: "06:30 PM - 07:15 PM", matchups: ["MATCH 1"] },
-                { date: "Oct 15, 2025", time: "07:15 PM - 08:00 PM", matchups: ["MATCH 2"] },
-                { date: "Oct 15, 2025", time: "08:00 PM - 08:45 PM", matchups: ["MATCH 3"] },
-              ],
-            },
-            {
-              id: "MobileLegends",
-              name: "Mobile Legends",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 15, 2025", time: "9:30 PM - 10:15 PM", matchups: ["UPPER BRACKET QUARTER-FINAL"] },
-                { date: "Oct 15, 2025", time: "10:15 PM - 11:00 PM", matchups: ["UPPER BRACKET SEMI-FINAL , LOWER BRACKET ROUND 1"] },
-                { date: "Oct 15, 2025", time: "11:00 PM - 11:45 PM", matchups: ["UPPER BRACKET FINAL , LOWER BRACKET SEMI-FINAL"] },
-              ],
-            },
-            {
-              id: "CODM",
-              name: "COD Mobile",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 16, 2025", time: "06:00 PM - 06:45 PM", matchups: ["Quarter-Final "] },
-                { date: "Oct 16, 2025", time: "06:45 PM - 07:30 PM", matchups: ["Semi-Final"] },
-              ],
-            },
-            {
-              id: "freefire",
-              name: "FreeFire",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 16, 2025", time: "06:30 PM - 07:15 PM", matchups: ["SF MATCH 1"] },
-                { date: "Oct 16, 2025", time: "07:15 PM - 08:00 PM", matchups: ["SF MATCH 2"] },
-                { date: "Oct 16, 2025", time: "08:00 PM - 08:45 PM", matchups: ["SF MATCH 3"] },
-              ],
-            },
-            {
-              id: "MobileLegends",
-              name: "Mobile Legends",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 16, 2025", time: "9:30 PM - 10:15 PM", matchups: ["LOWER BRACKET SEMI-FINAL"] },
-                { date: "Oct 16, 2025", time: "10:15 PM - 11:00 PM", matchups: ["LOWER BRACKET FINAL "] },
-              ],
-            },
-            {
-              id: "none",
-              name: "No Matches",
-              image: "",
-              format: "none",
-              rankings: [],
-              schedule: [
-                { date: "Oct 17, 2025", time: "-", matchups: ["No matches scheduled for this day."] },
-              ],
-            },
-            {
-              id: "allgames",
-              name: "CODM , FREEFIRE , MLBB , VALORANT",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 18, 2025", time: "10:00 AM - 12:45 PM", matchups: ["FINALS — Venue: CC-06"]
-},
-    
-              ],
-            },
-            {
-              id: "bgmi",
-              name: "BGMI",
-              image: "",
-              format: "points",
-              rankings: [],
-              schedule: [
-                { date: "Oct 18, 2025", time: "02:00 PM - 04:30 PM", matchups: ["FINALS — Venue: CC-06"]
- },
-    
-              ],
-            },
+            
           ],
-        } // Removed: as any) as Event
+        }
       : undefined);
 
   if (!event) {
     return (
       <div className="min-h-screen pt-24 pb-12">
         <div className="container mx-auto px-4">
-          <Card className="glass-card border-border/50">
-            <CardContent className="p-6 text-center text-muted-foreground">Event not found.</CardContent>
+          <Card>
+            <CardContent className="p-6 text-center">
+              Event not found.
+            </CardContent>
           </Card>
         </div>
       </div>
     );
   }
 
-  // Removed: DayScheduleRow type definition
-
-  // Build a map of date -> schedule rows
-  const scheduleByDay = {}; // Removed: : Record<string, DayScheduleRow[]>
-
-  event.games.forEach((game) => {
-    // Removed: type casts on game.schedule
-    const gameSchedule = game.schedule;
-
-    if (gameSchedule && Array.isArray(gameSchedule)) {
-      gameSchedule.forEach((slot, idx) => {
-        const slotDate = slot.date ?? event.startDate; // fallback to startDate
-        const dayStr = format(parse(slotDate, "MMM d, yyyy", new Date()), "MMM d, yyyy");
-
-        if (!scheduleByDay[dayStr]) scheduleByDay[dayStr] = [];
-        scheduleByDay[dayStr].push({
-          key: `${game.id}-slot-${idx}`,
-          time: slot.time,
-          game: game.name,
-          matchups: Array.isArray(slot.matchups) ? slot.matchups.join(", ") : String(slot.matchups),
-        });
-      });
-    }
-  });
-
-  // Generate all event days
-  const days = []; // Removed: : Date[]
-  const eventStartDate = event.startDate; // Removed: as string | undefined
-  const eventEndDate = event.endDate; // Removed: as string | undefined
-
-  if (eventStartDate && eventEndDate) {
-    const start = parse(eventStartDate, "MMM d, yyyy", new Date());
-    const end = parse(eventEndDate, "MMM d, yyyy", new Date());
-    const diff = Math.max(0, differenceInCalendarDays(end, start));
-    for (let i = 0; i <= diff; i++) days.push(addDays(start, i));
-  } else if (event.date) {
-    days.push(parse(event.date, "MMM d, yyyy", new Date()));
+  /* ---------- EVENT ENDED VIEW ---------- */
+  if (event.status === 'completed') {
+    return (
+      <div className="min-h-screen pt-24 pb-12">
+        <div className="container mx-auto px-4">
+          <Card className="glass-card border-border/50">
+            <CardContent className="p-12 text-center">
+              <h1 className="font-orbitron text-4xl font-bold mb-3">
+                Event Ended
+              </h1>
+              <p className="text-muted-foreground mb-6">
+                This event has concluded. Thank you for participating!
+              </p>
+              <Link to="/schedule">
+                <Button variant="outline">Back to Schedule</Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
   }
 
-  const displayTitle = event.id === "lock-load" ? `${event.title} Schedule` : event.title;
-  const displayDate = eventStartDate && eventEndDate ? `${eventStartDate} to ${eventEndDate}` : event.date;
+  /* ---------- GAME TABS ---------- */
+  const [activeGameId, setActiveGameId] = useState(event.games[0]?.id);
+  const activeGame = event.games.find((g) => g.id === activeGameId);
 
+  /* ---------- BUILD DAY LIST ---------- */
+  const days = [];
+  const start = parse(event.startDate, 'MMM d, yyyy', new Date());
+  const end = parse(event.endDate, 'MMM d, yyyy', new Date());
+  const diff = differenceInCalendarDays(end, start);
+  for (let i = 0; i <= diff; i++) days.push(addDays(start, i));
+
+  /* ---------- GROUP SCHEDULE BY DAY ---------- */
+  const scheduleByDay = {};
+
+  if (activeGame?.schedule) {
+    activeGame.schedule.forEach((slot, idx) => {
+      const dayStr = format(
+        parse(slot.date, 'MMM d, yyyy', new Date()),
+        'MMM d, yyyy'
+      );
+
+      if (!scheduleByDay[dayStr]) scheduleByDay[dayStr] = [];
+      scheduleByDay[dayStr].push({
+        key: `${activeGame.id}-${idx}`,
+        time: slot.time,
+        matchups: Array.isArray(slot.matchups)
+          ? slot.matchups.join(', ')
+          : slot.matchups,
+      });
+    });
+  }
+
+  /* ---------- LIVE EVENT UI ---------- */
   return (
     <div className="min-h-screen pt-24 pb-12">
       <div className="container mx-auto px-4">
-        <div className="mb-8 flex items-center justify-between">
+        {/* HEADER */}
+        <div className="mb-6 flex justify-between items-start">
           <div>
-            <h1 className="font-orbitron text-4xl font-bold">{displayTitle}</h1>
-            <p className="text-sm text-muted-foreground flex items-center gap-4 mt-2">
-              <span className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" /> {displayDate}
+            <h1 className="font-orbitron text-4xl font-bold">
+              {event.title} Schedule
+            </h1>
+            <p className="flex items-center gap-4 text-muted-foreground mt-2">
+              <span className="flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                {event.startDate} – {event.endDate}
               </span>
-              {event.location ? (
-                <span className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> {event.location}
-                </span>
-              ) : null}
+              <span className="flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                {event.location}
+              </span>
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Link to="/schedule">
-              <Button variant="outline">Back</Button>
-            </Link>
-          </div>
+
+          <Link to="/schedule">
+            <Button variant="outline">Back</Button>
+          </Link>
         </div>
 
+        {/* GAME TABS */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {event.games.map((game) => (
+            <button
+              key={game.id}
+              onClick={() => setActiveGameId(game.id)}
+              className={`px-4 py-2 mx-1 rounded-md font-orbitron text-sm transition ${
+                activeGameId === game.id
+                  ? 'bg-primary text-white'
+                  : 'bg-muted hover:bg-muted/80 text-muted-foreground'
+              }`}
+            >
+              {game.name}
+            </button>
+          ))}
+        </div>
+
+        {/* DAY-WISE SCHEDULE */}
         {days.map((day) => {
-          const dayStr = format(day, "MMM d, yyyy");
-          const daySchedule = scheduleByDay[dayStr] ?? [];
+          const dayStr = format(day, 'MMM d, yyyy');
+          const slots = scheduleByDay[dayStr] || [];
 
           return (
-            <Card key={dayStr} className="glass-card border-border/50 mb-6">
+            <Card key={dayStr} className="mb-6">
               <CardHeader>
                 <CardTitle className="font-orbitron">{dayStr}</CardTitle>
               </CardHeader>
               <CardContent>
-                {daySchedule.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-border/50 hover:bg-transparent">
-                          <TableHead className="font-orbitron">Time</TableHead>
-                          <TableHead className="font-orbitron">Game</TableHead>
-                          <TableHead className="font-orbitron">Matchups</TableHead>
+                {slots.length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Time</TableHead>
+                        <TableHead>Matchups</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {slots.map((s) => (
+                        <TableRow key={s.key}>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              {s.time}
+                            </div>
+                          </TableCell>
+                          <TableCell>{s.matchups}</TableCell>
                         </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {daySchedule.map((r) => (
-                          <TableRow key={`${dayStr}-${r.key}`} className="border-border/50 hover:bg-primary/5 transition-colors">
-                            <TableCell className="whitespace-nowrap">
-                              <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-secondary" /> {r.time}
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground font-semibold">{r.game}</TableCell>
-                            <TableCell>
-                              <div className="text-sm text-foreground">{r.matchups}</div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
+                      ))}
+                    </TableBody>
+                  </Table>
                 ) : (
-                  <div className="p-8 text-center text-muted-foreground">Schedule coming soon for this day.</div>
+                  <div className="text-center text-muted-foreground py-6">
+                    Match schedule will be announced soon.
+                  </div>
                 )}
               </CardContent>
             </Card>
