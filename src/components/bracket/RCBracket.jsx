@@ -175,7 +175,14 @@ const RCBracket = ({ canEdit = false }) => {
       };
 
       // Propagate winners to next rounds
-      const updatedBracket = propagateWinnersToNextRound(newBracket, colIndex);
+      const tempFinalStage = { ...finalStage }; // Reference for final updates
+      const updatedBracket = propagateWinnersToNextRound(newBracket, colIndex, tempFinalStage);
+
+      // If quarterfinals were updated, update finals state
+      if (colIndex === newBracket.columns.length - 1) {
+        setFinalStage(tempFinalStage);
+      }
+
       return updatedBracket;
     });
   };
