@@ -222,6 +222,8 @@ const EventLeaderboard = () => {
 
     // Pass the correct props to each game component
     switch (gameId) {
+      case "rc":
+        return <RCBracket canEdit={canEdit} />;
       case "ml":
         return <LeaderboardMl eventId={eventId} game={selectedGame} canEdit={canEdit} />;
       case "bgmi":
