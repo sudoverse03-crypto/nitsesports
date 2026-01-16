@@ -95,8 +95,16 @@ const specialVanguardArena = {
   participants: "150",
   prize: "5,000",
   status: "completed",
-  image: lockLoadHero, 
+  image: lockLoadHero,
   games: [
+    {
+      id: "rc",
+      name: "Real Cricket 24",
+      image: codImg,
+      participants: "32",
+      gameHead: { name: "TBA", phone: "TBA" },
+      format: "bracket",
+    },
     {
       id: "ml",
       name: "Mobile Legends",
