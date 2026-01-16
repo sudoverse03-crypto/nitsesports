@@ -155,8 +155,14 @@ const RCBracket = ({ canEdit = false }) => {
         return propagateWinnersToNextRound(updatedBracket, columnIndex + 1, finalStage);
       }
     } else if (columnIndex === updatedBracket.columns.length - 1) {
-      // Last column (Quarterfinals) - propagate to finals
+      // Last column (Quarterfinals) - propagate to finals and placement matches
       const winners = currentMatches.map(match => getWinner(match) || "TBD");
+      const losers = currentMatches.map(match => {
+        const winner = getWinner(match);
+        if (winner === match.teamA) return match.teamB;
+        if (winner === match.teamB) return match.teamA;
+        return "TBD";
+      });
 
       if (finalStage) {
         // Update semifinals with quarterfinal winners
@@ -164,6 +170,12 @@ const RCBracket = ({ canEdit = false }) => {
         finalStage.semifinals[0].teamB = winners[1] || "TBD";
         finalStage.semifinals[1].teamA = winners[2] || "TBD";
         finalStage.semifinals[1].teamB = winners[3] || "TBD";
+
+        // Update 5th/6th place bracket with quarterfinal losers
+        finalStage.placementMatches.fifthSixthBracket[0].teamA = losers[0] || "TBD";
+        finalStage.placementMatches.fifthSixthBracket[0].teamB = losers[1] || "TBD";
+        finalStage.placementMatches.fifthSixthBracket[1].teamA = losers[2] || "TBD";
+        finalStage.placementMatches.fifthSixthBracket[1].teamB = losers[3] || "TBD";
       }
     }
 
